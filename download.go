@@ -28,7 +28,7 @@ func fetchDocument(websiteURL string) (*goquery.Document, error) {
 	return doc, nil
 }
 
-func createImagFile(folderName, targetExt string, i int) *os.File {
+func createImgFile(folderName, targetExt string, i int) *os.File {
 	itemName := fmt.Sprintf("%d.%s", i, targetExt)
 	filepath := path.Join(folderName, itemName)
 
@@ -58,7 +58,7 @@ func fetchImg(s *goquery.Selection, attr string) io.ReadCloser {
 
 func download(doc *goquery.Document, folderName, selector, attr, targetExt string) {
 	doc.Find(selector).Each(func(i int, s *goquery.Selection) {
-		imgFile := createImagFile(folderName, targetExt, i)
+		imgFile := createImgFile(folderName, targetExt, i)
 		defer imgFile.Close()
 
 		img := fetchImg(s, attr)
