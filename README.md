@@ -7,7 +7,7 @@ Golang Runtime
 
 ## 1. Clone Repository
 ```
-git clone https://github.com/ksyuk/Download-WebSite-Images
+git clone https://github.com/ksyuk/download-website-images.git
 ```
 
 ## 2. Run Code
@@ -24,7 +24,7 @@ attribute:
 target ext: 
 ```
 
-### Exmaple
+Example
 ```
 URL:https://flower.com/23
 folder name:flower
