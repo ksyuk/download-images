@@ -57,6 +57,8 @@ func fetchImg(s *goquery.Selection, attr string) io.ReadCloser {
 }
 
 func download(doc *goquery.Document, folderName, selector, attr, targetExt string) {
+	fmt.Println("Downloading...")
+
 	doc.Find(selector).Each(func(i int, s *goquery.Selection) {
 		imgFile := createImgFile(folderName, targetExt, i)
 		defer imgFile.Close()
@@ -71,4 +73,6 @@ func download(doc *goquery.Document, folderName, selector, attr, targetExt strin
 
 		fmt.Println("Downloaded:", i)
 	})
+
+	fmt.Println("Done!")
 }
