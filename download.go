@@ -52,7 +52,7 @@ func createImgFile(folderName, targetExt string, i int) *os.File {
 
 func fetchImg(s *goquery.Selection, attr string) io.ReadCloser {
 	imgURL, exist := s.Attr(attr)
-	if exist != true {
+	if !exist {
 		panic(fmt.Sprintf("Error finding image url: %s", imgURL))
 	}
 	// Remove all whitespaces
