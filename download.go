@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path"
@@ -26,6 +27,15 @@ func fetchDocument(websiteURL string) (*goquery.Document, error) {
 	}
 
 	return doc, nil
+}
+
+func createFolder(folderName string) {
+	if _, err := os.Stat(folderName); os.IsNotExist(err) {
+        err := os.Mkdir(folderName, 0755)
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
 }
 
 func createImgFile(folderName, targetExt string, i int) *os.File {

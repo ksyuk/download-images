@@ -31,6 +31,7 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("Error fetching document: %s", err))
 	}
+	createFolder(folderName)
 	download(doc, folderName, selector, attr, targetExt)
 
 }
