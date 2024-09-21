@@ -1,37 +1,36 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strings"
+
+	"github.com/joho/godotenv"
 )
 
-func receiveInput(reader *bufio.Reader, message string) string {
-	fmt.Printf("%s:", message)
-	input, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Println("Error receiving input:", err)
-	}
-	input = strings.TrimSpace(input)
+func getEnvVar(varName string) string {
+    err := godotenv.Load(".env")
+    if err != nil {
+        fmt.Printf("Error loading .env file")
+    }
 
-	return input
+    value := os.Getenv(varName)
+    if value == "" {
+        fmt.Printf("Error: %s environment variable not set\n", varName)
+    }
+    return value
 }
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+    webSiteURL := getEnvVar("URL")
+    folderName := getEnvVar("FOLDER_NAME")
+    selector := getEnvVar("SELECTOR")
+    attr := getEnvVar("ATTRIBUTE")
+    targetExt := getEnvVar("TARGET_EXT")
 
-	webSiteURL := receiveInput(reader, "URL")
-	folderName := receiveInput(reader, "folder name")
-	selector := receiveInput(reader, "selector")
-	attr := receiveInput(reader, "attribute")
-	targetExt := receiveInput(reader, "target ext")
-
-	doc, err := fetchDocument(webSiteURL)
-	if err != nil {
-		panic(fmt.Sprintf("Error fetching document: %s", err))
-	}
-	createFolder(folderName)
-	download(doc, folderName, selector, attr, targetExt)
-
+    doc, err := fetchDocument(webSiteURL)
+    if err != nil {
+        panic(fmt.Sprintf("Error fetching document: %s", err))
+    }
+    createFolder(folderName)
+    download(doc, folderName, selector, attr, targetExt)
 }
