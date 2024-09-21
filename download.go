@@ -58,6 +58,11 @@ func fetchImg(s *goquery.Selection, attr string) io.ReadCloser {
 	// Remove all whitespaces
 	imgURL = strings.Join(strings.Fields(imgURL), "")
 
+	// Ignore data URLs
+    if strings.HasPrefix(imgURL, "data:") {
+        return nil
+    }
+
 	imgRes, err := http.Get(imgURL)
 	if err != nil {
 		panic(fmt.Sprintf("Error creating image file: %s", err))
@@ -74,6 +79,9 @@ func download(doc *goquery.Document, folderName, selector, attr, targetExt strin
 		defer imgFile.Close()
 
 		img := fetchImg(s, attr)
+		if img == nil {
+			return
+		}
 		defer img.Close()
 
 		_, err := io.Copy(imgFile, img)
